@@ -56,13 +56,13 @@ export const crudReducer = (state = initialState, action) => {
                 flipflag1: !state.flipflag1
             }
         case DEL:
-            const todos = state.todos.filter(todo => {
+            const filteredTodos = state.todos.filter(todo => {
                 return todo.id !== action.payload
             });
 
             return {
                 ...state,
-                todos
+                todos: filteredTodos,
             }
         case HANDLE_CHANGE:
             return {
@@ -78,7 +78,6 @@ export const crudReducer = (state = initialState, action) => {
             }
         default:
             return state;
-        }
     }
 }
 
