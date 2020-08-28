@@ -6,7 +6,10 @@ class AddTodo extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={(e) => this.props.handleSubmit(e)}>
+                <form onSubmit={ev => {
+                    ev.preventDefault()
+                    this.props.addTodo(this.props.content)
+                }}>
                     <label>Add new todo:</label>
 
                     <input
@@ -30,9 +33,9 @@ const mapDispatchToProps = dispatch => ({
     updateContent: (newContent) => {
         dispatch({type: UPDATE_CONTENT, payload: newContent});
     },
-    // addTodo: (this.props.content) => {
-    //     dispatch({type: CREATE, payload: this.props.content});
-    // },
+    addTodo: (content) => {
+        dispatch({type: CREATE, payload: content});
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);

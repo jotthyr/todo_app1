@@ -7,6 +7,7 @@ export const UPDATE_CONTENT = 'UPDATE_CONTENT'
 export const HANDLE_SUBMIT = 'HANDLE_SUBMIT'
 
 const initialState = {
+    lastId: 2,
     todos: [
       {id: 1, content: 'buy some milk'},
       {id: 2, content: 'play mario kart'}
@@ -14,15 +15,21 @@ const initialState = {
     flipflag1: false,
     flipflag2: false,
     content: ''
-  }
+}
 
 export const crudReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE:
-            let todos = [...state.todos, action.payload]
+            const newTodo = {
+                id: state.lastId + 1,
+                content: action.payload
+            }
+
+            let todos = [...state.todos, newTodo]
 
             return {
                 ...state,
+                lastId: state.lastId + 1,
                 todos,
             }
 
