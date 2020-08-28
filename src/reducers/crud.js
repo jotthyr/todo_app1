@@ -19,9 +19,7 @@ const initialState = {
 export const crudReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE:
-            payload = Math.random()
-
-            let todos = [...state.todos, payload]
+            let todos = [...state.todos, action.payload]
 
             return {
                 ...state,
