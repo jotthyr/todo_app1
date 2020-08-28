@@ -17,46 +17,49 @@ const initialState = {
   }
 
 export const crudReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case CREATE:
-                payload = Math.random()
-                let todos = [...state.todos, payload]                
+            payload = Math.random()
+
+            let todos = [...state.todos, payload]
+
             return {
-                ...state
+                ...state,
                 todos,
             }
         case READ:
             return {
                 ...state
-                }
+            }
         case UPDATE:
-             
-                if(state.flipflag1 ===  true){
-                  const todos = state.todos.map(todo => {
-                  if (todo.id === action.payload){
-                    return {id: action.payload, content: action.payload1}
-                  }else{
-                    return {id: todo.id, content: todo.content}
-                  }
+
+            if (state.flipflag1 ===  true) {
+                const todos = state.todos.map(todo => {
+                    if (todo.id === action.payload) {
+                        return {id: action.payload, content: action.payload1}
+                    } else {
+                        return {id: todo.id, content: todo.content}
+                    }
                 })
-                
-            return {
-                ...state
-                todos,
+
+                return {
+                    ...state,
+                    todos,
                 }
             }
-              
-              break;
+
+            break;
         case EDIT1:
             return {
-                ...state
-                flipflag2: action.payload
+                ...state,
+                flipflag2: action.payload,
                 flipflag1: !state.flipflag1
             }
         case DEL:
             const todos = state.todos.filter(todo => {
-                  return todo.id !== action.payload
-                });
+                return todo.id !== action.payload
+            });
+
             return {
                 ...state,
                 todos
@@ -67,15 +70,15 @@ export const crudReducer = (state = initialState, action) => {
                 content: action.payload.target.value
             }
         case HANDLE_SUBMIT:
-            action.payload.preventDefault(); 
+            action.payload.preventDefault();
+
             return {
                 ...state,
-                content: ''        
+                content: ''
             }
-            
         default:
-            return state;      
-        }                 
+            return state;
+        }
     }
 }
 
