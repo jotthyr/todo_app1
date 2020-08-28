@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { HANDLE_CHANGE, HANDLE_SUBMIT, CREATE } from './reducers/crud'
+import { UPDATE_CONTENT, HANDLE_SUBMIT, CREATE } from './reducers/crud'
 
 class AddTodo extends Component {
     render() {
@@ -11,8 +11,10 @@ class AddTodo extends Component {
 
                     <input
                         type="text"
-                        onChange={(e) => this.props.handleChange(e)}
-                        alue={this.props.content}
+                        onChange={ev => {
+                            this.props.updateContent(ev.target.value)
+                        }}
+                        value={this.props.content}
                     />
                 </form>
             </div>
@@ -25,16 +27,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChange: (event) => {
-        dispatch({type: HANDLE_CHANGE, payload: event});
+    updateContent: (newContent) => {
+        dispatch({type: UPDATE_CONTENT, payload: newContent});
     },
-    handleSubmit: (event) => {
-        this.props.addTodo(this.props.content);
-        dispatch({type: HANDLE_SUBMIT, payload: event});
-    },
-    addTodo: (this.props.content) => {
-        dispatch({type: CREATE, payload: this.props.content});
-    },
+    // addTodo: (this.props.content) => {
+    //     dispatch({type: CREATE, payload: this.props.content});
+    // },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);

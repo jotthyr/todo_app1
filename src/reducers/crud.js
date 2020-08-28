@@ -3,7 +3,7 @@ export const READ = 'READ'
 export const UPDATE = 'UPDATE'
 export const DEL = 'DEL'
 export const EDIT1 = 'EDIT1'
-export const HANDLE_CHANGE = 'HANDLE_CHANGE'
+export const UPDATE_CONTENT = 'UPDATE_CONTENT'
 export const HANDLE_SUBMIT = 'HANDLE_SUBMIT'
 
 const initialState = {
@@ -61,10 +61,10 @@ export const crudReducer = (state = initialState, action) => {
                 todos: filteredTodos,
             }
 
-        case HANDLE_CHANGE:
+        case UPDATE_CONTENT:
             return {
                 ...state,
-                content: action.payload.target.value
+                content: action.payload
             }
 
         case HANDLE_SUBMIT:
