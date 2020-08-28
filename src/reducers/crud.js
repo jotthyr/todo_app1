@@ -53,7 +53,7 @@ export const crudReducer = (state = initialState, action) => {
 
         case DEL:
             const filteredTodos = state.todos.filter(todo => {
-                return todo.id !== action.payload
+                return todo.id !== action.payload.id
             });
 
             return {
