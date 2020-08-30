@@ -3,10 +3,11 @@ export const READ = 'READ'
 export const UPDATE = 'UPDATE'
 export const DEL = 'DEL'
 export const EDIT1 = 'EDIT1'
-export const HANDLE_CHANGE = 'HANDLE_CHANGE'
+export const UPDATE_CONTENT = 'UPDATE_CONTENT'
 export const HANDLE_SUBMIT = 'HANDLE_SUBMIT'
 
 const initialState = {
+    lastId: 2,
     todos: [
       {id: 1, content: 'buy some milk'},
       {id: 2, content: 'play mario kart'}
@@ -14,68 +15,75 @@ const initialState = {
     flipflag1: false,
     flipflag2: false,
     content: ''
-  }
+}
 
 export const crudReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case CREATE:
-                payload = Math.random()
-                let todos = [...state.todos, payload]                
+            const newTodo = {
+                id: state.lastId + 1,
+                content: action.payload
+            }
+
+            let todos = [...state.todos, newTodo]
+
             return {
-                ...state
+                ...state,
+                lastId: state.lastId + 1,
                 todos,
             }
-        case READ:
-            return {
-                ...state
-                }
+
         case UPDATE:
-             
-                if(state.flipflag1 ===  true){
-                  const todos = state.todos.map(todo => {
-                  if (todo.id === action.payload){
-                    return {id: action.payload, content: action.payload1}
-                  }else{
-                    return {id: todo.id, content: todo.content}
-                  }
+            if (state.flipflag1 ===  true) {
+                const todos = state.todos.map(todo => {
+                    if (todo.id === action.payload) {
+                        return {id: action.payload, content: action.payload1}
+                    } else {
+                        return {id: todo.id, content: todo.content}
+                    }
                 })
-                
-            return {
-                ...state
-                todos,
+
+                return {
+                    ...state,
+                    todos,
                 }
             }
-              
-              break;
+
+            break;
+
         case EDIT1:
             return {
-                ...state
-                flipflag2: action.payload
+                ...state,
+                flipflag2: action.payload,
                 flipflag1: !state.flipflag1
             }
+
         case DEL:
-            const todos = state.todos.filter(todo => {
-                  return todo.id !== action.payload
-                });
+            const filteredTodos = state.todos.filter(todo => {
+                return todo.id !== action.payload
+            });
+
             return {
                 ...state,
-                todos
+                todos: filteredTodos,
             }
-        case HANDLE_CHANGE:
+
+        case UPDATE_CONTENT:
             return {
                 ...state,
-                content: action.payload.target.value
+                content: action.payload
             }
+
         case HANDLE_SUBMIT:
-            action.payload.preventDefault(); 
+            action.payload.preventDefault();
+
             return {
                 ...state,
-                content: ''        
+                content: ''
             }
-            
+
         default:
-            return state;      
-        }                 
+            return state;
     }
 }
 

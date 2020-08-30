@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { UPDATE_CONTENT, HANDLE_SUBMIT, CREATE } from './reducers/crud'
 
 class AddTodo extends Component {
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <form onSubmit={(e) => this.props.handleSubmit(e)}>
+                <form onSubmit={ev => {
+                    ev.preventDefault()
+                    this.props.addTodo(this.props.content)
+                }}>
                     <label>Add new todo:</label>
-                    <input type="text" onChange={(e) => this.props.handleChange(e)} value={this.props.content} />
+
+                    <input
+                        type="text"
+                        onChange={ev => {
+                            this.props.updateContent(ev.target.value)
+                        }}
+                        value={this.props.content}
+                    />
                 </form>
             </div>
         )
@@ -19,16 +30,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChange: (event) => {
-        dispatch({type: HANDLE_CHANGE, payload: event});
-},
-    handleSubmit: (event) => {
-        this.props.addTodo(this.props.content);
-        dispatch({type: HANDLE_SUBMIT, payload: event});
-},
-    addTodo: (this.props.content) => {
-    dispatch({type: CREATE, payload: this.props.content});
-},
+    updateContent: (newContent) => {
+        dispatch({type: UPDATE_CONTENT, payload: newContent});
+    },
+    addTodo: (content) => {
+        dispatch({type: CREATE, payload: content});
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
